@@ -1,0 +1,34 @@
+<mat-card class="right-panel-card">
+  <span>
+    <button
+      mat-button
+      (click)="submitCreateCollectionDirective()"
+      class="new-collection-button"
+    >
+
+    <label>new collection</label>
+    <mat-icon>add</mat-icon>
+
+
+    </button>
+  </span>
+
+
+    <mat-selection-list
+      multiple = false
+      [(ngModel)]="collectionSelection"
+    >
+      <mat-list-option
+        *ngFor="let collection of this.collections"
+        [value]="collection"
+      >
+        {{collection}}
+      </mat-list-option>
+
+    </mat-selection-list>
+
+    <button mat-stroked-button (click)="this.submitCollectionsQuery()">
+      <label>Submit</label>
+    </button>
+
+</mat-card>

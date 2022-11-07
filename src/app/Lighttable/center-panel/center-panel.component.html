@@ -1,0 +1,35 @@
+
+<div class="center-column">
+  <div>
+    <mat-card class="queryBarBackingCard" >
+        <mat-form-field
+          appearance="legacy"
+          [style.width.px]=375
+        >
+          <input
+            matNativeControl type="text"
+            [formControl]="queryFormControl"
+            placeholder="Submit query..."
+          >
+        </mat-form-field>
+
+        <button mat-mini-fab (click)="handleQuerySubmit()" class="querySubmitButton" >
+          <mat-icon>east</mat-icon>
+        </button>
+    </mat-card>
+  </div>
+
+  <div class="imgGrid">
+    <ng-container #imgPaneHost></ng-container>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+

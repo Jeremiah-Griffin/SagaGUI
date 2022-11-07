@@ -1,0 +1,17 @@
+
+<mat-card class="right-panel-card">
+  <mat-selection-list
+  [(ngModel)]="selectionsModel"
+  >
+
+  <mat-list-option *ngFor="let model of models">
+    {{model}}
+  </mat-list-option>
+
+  </mat-selection-list>
+
+  <button mat-stroked-button (click)="submitMakeQuery()">
+    <label>Submit</label>
+  </button>
+
+</mat-card>

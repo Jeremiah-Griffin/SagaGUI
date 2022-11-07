@@ -1,0 +1,98 @@
+
+  <mat-card class="right-panel-card">
+
+  <mat-radio-group
+    [(ngModel)] ="queryMode"
+  >
+  <mat-radio-button *ngFor="let pair of modesModelNames" [value]="pair[0]">
+    {{pair[1]}}
+  </mat-radio-button>
+
+  </mat-radio-group>
+
+  <div *ngIf="nativeSelected()" >
+
+    <mat-selection-list
+      [(ngModel)]="nativeLengthSelections"
+      >
+      <h3 *ngIf="this.nativeWideLengths.length > 0"  matSubheader>
+        Wide Angle
+      </h3>
+      <mat-list-option
+        *ngFor="let length of this.nativeWideLengths"
+        [value]="length"
+      >
+        {{length}}mm
+      </mat-list-option>
+
+      <h3 *ngIf="this.nativeNormalLengths.length > 0" matSubheader>
+        Normal
+      </h3>
+      <mat-list-option
+        *ngFor="let length of this.nativeNormalLengths"
+         [value]="length"
+      >
+        {{length}}mm
+      </mat-list-option>
+
+      <h3 *ngIf="this.nativeTelephotoLengths.length > 0" matSubheader>
+        Telephoto
+      </h3>
+      <mat-list-option
+        *ngFor="let length of this.nativeTelephotoLengths"
+        [value]="length"
+      >
+        {{length}}mm
+      </mat-list-option>
+    </mat-selection-list>
+
+    <button mat-stroked-button (click)="submitLensQuery()">
+      <label>Submit</label>
+    </button>
+  </div>
+
+  <div *ngIf="fullFrameSelected()" >
+
+    <mat-selection-list
+      [(ngModel)]="fullFrameLengthSelections"
+    >
+      <h3 *ngIf="this.fullFrameWideLengths.length > 0" matSubheader>
+        Wide Angle
+      </h3>
+      <mat-list-option
+        *ngFor="let length of this.fullFrameWideLengths"
+        [value]="length"
+      >
+        {{length}}mm
+      </mat-list-option>
+
+      <h3 *ngIf="this.fullFrameNormalLengths.length > 0" matSubheader>
+        Normal
+      </h3>
+      <mat-list-option
+        *ngFor="let length of this.fullFrameNormalLengths"
+        [value]="length"
+      >
+        {{length}}mm
+      </mat-list-option>
+
+      <h3 *ngIf="this.fullFrameTelephotoLengths.length > 0" matSubheader>
+        Telephoto
+      </h3>
+      <mat-list-option
+        *ngFor="let length of this.fullFrameTelephotoLengths"
+        [value]="length"
+      >
+        {{length}}mm
+      </mat-list-option>
+    </mat-selection-list>
+
+    <button mat-stroked-button (click)="submitLensQuery()">
+      <label>Submit</label>
+    </button>
+  </div>
+
+
+
+
+</mat-card>
