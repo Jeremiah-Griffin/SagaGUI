@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'automation-import-card',
+  selector: 'import-card',
   templateUrl: './import-card.component.html',
   styleUrls: ['./import-card.component.scss']
 })
-export class ImportCardComponent implements OnInit {
+export class ImportCardComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

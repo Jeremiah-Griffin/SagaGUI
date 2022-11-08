@@ -8,11 +8,13 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {LighttableComponent} from "./Lighttable/lighttable.component";
 import {MatTabsModule} from "@angular/material/tabs";
+import {AutomationComponent} from "./automation/automation.component";
 
 
 const routes: Routes = [
-  { path: "lighttable", component: LighttableComponent},
-  { path: "**", redirectTo: "lighttable", pathMatch: 'full' }
+  { path: "lighttableRoute", component: LighttableComponent},
+  //{ path: "automationRoute", component: AutomationComponent},
+  { path: "**", redirectTo: "lighttableRoute", pathMatch: 'full' }
 ];
 
 @NgModule({
