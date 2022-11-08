@@ -16,6 +16,7 @@ import {MakeQueryComponent} from "./make-query/make-query.component";
 import {MatListModule} from "@angular/material/list";
 import {LensQueryComponent} from "./lens-query/lens-query.component";
 import { CollectionsCardComponent } from './collections-card/collections-card.component';
+import {MatTabsModule} from "@angular/material/tabs";
 @NgModule({
   declarations: [
     RightPanelComponent,
@@ -24,23 +25,24 @@ import { CollectionsCardComponent } from './collections-card/collections-card.co
     LensQueryComponent,
     CollectionsCardComponent,
   ],
-  imports: [
-    MatListModule,
-    MatSidenavModule,
-    MatDatepickerModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatCardModule,
-    MatRadioModule,
-    NgIf,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatIconModule,
-    FormsModule,
-    JsonPipe,
-    ReactiveFormsModule,
-    NgForOf,
-  ],
+    imports: [
+        MatListModule,
+        MatSidenavModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatNativeDateModule,
+        MatCardModule,
+        MatRadioModule,
+        NgIf,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        JsonPipe,
+        ReactiveFormsModule,
+        NgForOf,
+        MatTabsModule,
+    ],
   bootstrap: [RightPanelComponent],
     exports: [
         RightPanelComponent,

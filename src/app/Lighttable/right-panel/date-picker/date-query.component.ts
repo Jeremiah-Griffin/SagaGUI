@@ -2,10 +2,6 @@ import {Component, Query} from "@angular/core";
 import {TiffDateTime} from "../../../../utilities/types/TiffDateTime";
 import {FormControl} from "@angular/forms";
 
-enum QueryModes{
-  SingleDate,
-  DateRange,
-}
 
 enum SingleSelectModes{
   Before,
@@ -20,7 +16,7 @@ enum SingleSelectModes{
 
 })
 export class DateQueryComponent{
-  queryMode: QueryModes = QueryModes.SingleDate;
+
 
   singleSelectMode: SingleSelectModes;
   singleSelectModesModelNames: Array<[SingleSelectModes, string]> =
@@ -42,23 +38,7 @@ export class DateQueryComponent{
 
   }
 
-  SetDateRangeMode(): void{
-    this.queryMode = QueryModes.DateRange;
-  }
-
-  SetSingleMode(): void {
-    this.queryMode = QueryModes.SingleDate;
-  }
-
-  SingleSelected(): boolean{
-    return this.queryMode === QueryModes.SingleDate
-  }
-
-  DateRangeSelected(): boolean{
-    return this.queryMode === QueryModes.DateRange
-  }
-
-  async PushDate() {
+  async pushDate() {
     let selected_date: Date = this.datePickerControl.getRawValue();
     this.datePickerControl.reset();
 
@@ -67,7 +47,6 @@ export class DateQueryComponent{
 
         let end = new Date(selected_date.getFullYear(), selected_date.getMonth(), selected_date.getDate(), 23, 59, 59);
 
-        window.alert(end);
         await globalThis.db_connection.submitQueryToCenterPanel(this.constructRangeQuery(selected_date, end))
 
         break;
@@ -80,13 +59,10 @@ export class DateQueryComponent{
 
         break;
     }
-
-
-
   }
 
 
-  async PushDateRange() {
+  async pushDateRange() {
     let start = this.dateRangeStartControl.getRawValue();
     let end = this.dateRangeEndControl.getRawValue();
     this.dateRangeStartControl.reset();
@@ -94,6 +70,9 @@ export class DateQueryComponent{
 
     await globalThis.db_connection.submitQueryToCenterPanel(this.constructRangeQuery(start, end))
   }
+
+
+
 
   private constructRangeQuery(start: Date, end: Date): string{
     let startDateTime = new TiffDateTime(start);

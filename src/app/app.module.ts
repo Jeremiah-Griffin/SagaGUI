@@ -7,6 +7,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {LighttableComponent} from "./Lighttable/lighttable.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 const routes: Routes = [
@@ -16,15 +17,15 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [LighttableModule,
-    RouterOutlet,
-    MatToolbarModule,
-    MatDividerModule,
-    MatIconModule,
-    MatButtonModule,
-    RouterModule.forRoot(routes)
+    imports: [LighttableModule,
+        RouterOutlet,
+        MatToolbarModule,
+        MatDividerModule,
+        MatIconModule,
+        MatButtonModule,
+        RouterModule.forRoot(routes), MatTabsModule
 
-  ],
+    ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

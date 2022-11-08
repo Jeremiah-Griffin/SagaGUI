@@ -1,53 +1,59 @@
 <mat-card class="right-panel-card" >
-  <mat-button-toggle-group class="date-query-toggle-group">
-    <mat-button-toggle (change)="SetSingleMode()">Single</mat-button-toggle>
-    <mat-button-toggle (change)="SetDateRangeMode()">Range</mat-button-toggle>
-  </mat-button-toggle-group>
 
-  <div *ngIf="this.SingleSelected()" class="right-panel-card" >
+  <mat-tab-group>
+    <mat-tab
+      label="Single">
+      <div class="right-panel-card" >
+        <mat-radio-group
+          class="single-select-mode-radio-group"
+          [(ngModel)]="singleSelectMode"
+        >
+          <mat-radio-button *ngFor="let pair of singleSelectModesModelNames" [value]="pair[0]">
+            {{pair[1]}}
+          </mat-radio-button>
 
-    <mat-radio-group
-      class="single-select-mode-radio-group"
-      [(ngModel)]="singleSelectMode"
-    >
-      <mat-radio-button *ngFor="let pair of singleSelectModesModelNames" [value]="pair[0]">
-        {{pair[1]}}
-      </mat-radio-button>
+        </mat-radio-group>
 
-    </mat-radio-group>
-
-    <mat-form-field appearance="fill" >
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="datepicker" [formControl]="datePickerControl"  >
-      <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker #datepicker></mat-datepicker>
-    </mat-form-field>
+        <mat-form-field appearance="fill" >
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="datepicker" [formControl]="datePickerControl"  >
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
 
 
-    <button mat-stroked-button (click)="this.PushDate()">
-      <label>Submit</label>
-    </button>
-  </div>
+        <button mat-stroked-button (click)="this.pushDate()">
+          <label>Submit</label>
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab
+      label="Range">
+      <div class="right-panel-card">
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="rangepickerstart" [formControl]="dateRangeStartControl"  >
+          <mat-datepicker-toggle matSuffix [for]="rangepickerstart"></mat-datepicker-toggle>
+          <mat-datepicker #rangepickerstart></mat-datepicker>
+        </mat-form-field>
 
-  <div *ngIf="this.DateRangeSelected()" class="right-panel-card">
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="rangepickerstart" [formControl]="dateRangeStartControl"  >
-      <mat-datepicker-toggle matSuffix [for]="rangepickerstart"></mat-datepicker-toggle>
-      <mat-datepicker #rangepickerstart></mat-datepicker>
-    </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="rangepickerend" [formControl]="dateRangeEndControl"  >
+          <mat-datepicker-toggle matSuffix [for]="rangepickerend"></mat-datepicker-toggle>
+          <mat-datepicker #rangepickerend></mat-datepicker>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="rangepickerend" [formControl]="dateRangeEndControl"  >
-      <mat-datepicker-toggle matSuffix [for]="rangepickerend"></mat-datepicker-toggle>
-      <mat-datepicker #rangepickerend></mat-datepicker>
-    </mat-form-field>
+        <button mat-stroked-button (click)="this.pushDateRange()">
+          <label>Submit</label>
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 
-    <button mat-stroked-button (click)="this.PushDateRange()">
-      <label>Submit</label>
-    </button>
-  </div>
+
+
+
 
 
 </mat-card>
