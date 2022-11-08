@@ -1,5 +1,6 @@
 import {Component, EventEmitter} from '@angular/core';
 import {FormControl} from "@angular/forms";
+import {WorkflowService} from "../../../utilities/services/WorkflowService";
 
 @Component({
   selector: 'automation-import-card',
@@ -16,13 +17,12 @@ export class ImportCardComponent{
 
   queries = globalThis.queries;
 
-  importWorkflowEmitter: EventEmitter<string> = new EventEmitter;
 
-  constructor() {
+  constructor(private workflowService: WorkflowService) {
 
   }
 
-  saveWorkflow(){
+  saveImportWorkflow(){
 
     let query =
       [
@@ -31,7 +31,8 @@ export class ImportCardComponent{
         `{${this.selectedStatement}(${this.selectedTag.value}::${this.selectedField.value})}`
       ].join(" ");
 
-    window.alert(query)
+    this.workflowService.emitImportWorkflow(query)
+
 
   }
 

@@ -1,5 +1,6 @@
-import {ApplicationRef, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 import {pictureDir} from "@tauri-apps/api/path";
+import {WorkflowService} from "../../../../utilities/services/WorkflowService";
 
 @Component({
   selector: 'left-panel-commit-card',
@@ -11,28 +12,33 @@ export class CommitCardComponent implements OnInit {
   //these are the private internal state of the module.
   //When sending a request to read the children of a folder
   //or a selection, these are always used.
-  current_directory: string = "";
-  child_directories: Array<string> = [];
-  child_files: Array<string> = [];
+  currentDirectory: string = "";
+  childDirectories: Array<string> = [];
+  childFiles: Array<string> = [];
+  importWorkflow: Array<string> = [];
 
   //These are the truncated variants of the above suitable
   //for display in the application.
-  display_directories: Array<[string, number]>;
-  display_files: Array<[string, number]>;
+  displayDirectories: Array<[string, number]>;
+  displayFiles: Array<[string, number]>;
 
   //ngmodel state
   fileNameSelections: Array<string>;
-  constructor() {
+  constructor(private workFlowService: WorkflowService) {
     this.fileNameSelections = [];
+    this.displayDirectories = [];
+    this.displayFiles = [];
 
-    this.display_directories = [];
-    this.display_files = [];
-
+    workFlowService.newImportWorkflow$.subscribe(
+      workflow =>{
+        this.importWorkflow.push(workflow)
+      }
+    )
   }
 
   async ngOnInit() {
-    this.current_directory = await pictureDir();
-    await this.fetchChildren(this.current_directory);
+    this.currentDirectory = await pictureDir();
+    await this.fetchChildren(this.currentDirectory);
   }
 
 
@@ -56,32 +62,30 @@ export class CommitCardComponent implements OnInit {
     let files: Array<[string, number]> = [];
 
     let counter = 0;
-    for (let dir of this.child_directories){
+    for (let dir of this.childDirectories){
       dirs.push([this.truncate(dir), counter])
       counter++
     }
 
     counter = 0;
-    for (let file of this.child_files){
+    for (let file of this.childFiles){
       files.push([this.truncate(file), counter])
       counter++
     }
 
-    this.display_directories = dirs;
-    this.display_files = files;
-
-
+    this.displayDirectories = dirs;
+    this.displayFiles = files;
   }
 
 
 
   async fetchChildren(dir: string){
 
-    let prev_dir = this.current_directory;
+    let prev_dir = this.currentDirectory;
     try{
-      [this.child_directories, this.child_files] = await globalThis.fs_handler.fetchChildren(dir);
+      [this.childDirectories, this.childFiles] = await globalThis.fs_handler.fetchChildren(dir);
 
-      this.current_directory = dir;
+      this.currentDirectory = dir;
 
      this.construct_shortened_paths();
 
@@ -95,9 +99,9 @@ export class CommitCardComponent implements OnInit {
 
   async fetchParent(dir: string){
 
-    let prev_dir = this.current_directory;
+    let prev_dir = this.currentDirectory;
     try {
-      [this.current_directory, this.child_directories, this.child_files] = await globalThis.fs_handler.fetchParent(dir);
+      [this.currentDirectory, this.childDirectories, this.childFiles] = await globalThis.fs_handler.fetchParent(dir);
 
       this.construct_shortened_paths();
     }
@@ -109,7 +113,7 @@ export class CommitCardComponent implements OnInit {
   }
 
   buildFullPath(path: string){
-    return `${this.current_directory}\\${path}`
+    return `${this.currentDirectory}\\${path}`
   }
 
 
@@ -118,13 +122,16 @@ export class CommitCardComponent implements OnInit {
 
     let full_paths = [];
 
-    for (let fileName of this.child_files){
+    for (let fileName of this.childFiles){
       full_paths.push(this.buildFullPath(fileName));
     }
 
     await globalThis.db_connection.commitObjects(full_paths);
 
+    for (let workflow of this.importWorkflow){
+      window.alert(workflow)
+      await globalThis.db_connection.submitQueryToSelf(workflow);
+    }
   }
-
 
 }

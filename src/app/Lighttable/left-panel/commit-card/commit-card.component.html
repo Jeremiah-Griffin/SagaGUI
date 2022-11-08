@@ -1,12 +1,12 @@
 <mat-card class="commit-card-header-card">
   <span>
     <h3 matSubheader>
-      {{this.current_directory}}
+      {{this.currentDirectory}}
     </h3>
 
 
     <button mat-icon-button
-            (click)="fetchParent(this.current_directory)"
+            (click)="fetchParent(this.currentDirectory)"
     >
       <mat-icon>expand_less</mat-icon>
     </button>
@@ -28,16 +28,16 @@
   [(ngModel)]="fileNameSelections"
   dense
   >
-    <mat-list-item *ngFor="let dirIdxPair of this.display_directories">
+    <mat-list-item *ngFor="let dirIdxPair of this.displayDirectories">
       <mat-icon matListIcon>folder</mat-icon>
       <button mat-button
-      (click)="fetchChildren(buildFullPath(this.child_directories[dirIdxPair[1]]))">
+      (click)="fetchChildren(buildFullPath(this.childDirectories[dirIdxPair[1]]))">
         <label>{{dirIdxPair[0]}}</label>
       </button>
     </mat-list-item>
 
-    <mat-list-option *ngFor="let fileNameIdxPair of this.display_files"
-    [value]="this.child_files[fileNameIdxPair[1]]"
+    <mat-list-option *ngFor="let fileNameIdxPair of this.displayFiles"
+    [value]="this.childFiles[fileNameIdxPair[1]]"
     >
       {{fileNameIdxPair[0]}}
     </mat-list-option>
