@@ -1,18 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 
 
-enum QueryModes{
-  Native,
-  FullFrame,
-}
 @Component({
   selector: "right-panel-lens-query",
   templateUrl: "lens-query.component.html",
   styleUrls: ["lens-query.component.scss"],
 })
 export class LensQueryComponent implements OnInit{
-  queryMode: QueryModes = QueryModes.Native;
-  modesModelNames: Array<[QueryModes, string]> = [[QueryModes.Native, "Native"], [QueryModes.FullFrame, "35mm"]];
+
 
   nativeWideLengths: Array<number> = [];
   nativeNormalLengths: Array<number> = [];
@@ -40,57 +35,43 @@ export class LensQueryComponent implements OnInit{
     ] = await globalThis.db_connection.submitLensCardInitializationQuery();
   }
 
-  nativeSelected(): boolean{
-    return this.queryMode === QueryModes.Native
-  }
 
-  fullFrameSelected(): boolean{
-    return this.queryMode === QueryModes.FullFrame
-  }
 
-  //TODO this should prolly be split into two functions but im exhausted.
-  async submitLensQuery(){
+  async submitNativeQuery(){
+    let units = [];
+    for (let len of this.nativeLengthSelections){
+      units.push(`{get_field_equals(FocalLength::${len.toString()})}`)
+    }
+
+    let query = units.join("+");
+
     try{
-      await globalThis.db_connection.submitQueryToCenterPanel(this.buildLensQuery())
+      await globalThis.db_connection.submitQueryToCenterPanel(query)
 
     }
     catch (error){
       window.alert(error)
     }
+
+
   }
 
-  private buildLensQuery():string {
+  async submit35mmQuery(){
+    let units = [];
 
-    let units: Array<string> = [];
+    for (let len of this.fullFrameLengthSelections){
+      units.push(`{get_field_equals(FocalLengthIn35mmFilm::${len.toString()})}`);
+    }
 
-    switch (this.queryMode){
-      case QueryModes.Native:{
+    let query = units.join("+");
 
-        let count: number = 0;
-
-        for (let len of this.nativeLengthSelections){
-          units.push(`{get_field_equals(FocalLength::${len.toString()})}`)
-        }
-
-        count++;
-
-        break;
-      }
-
-      case QueryModes.FullFrame:{
-
-        let iterations: number = 0;
-
-        for (let len of this.fullFrameLengthSelections){
-          units.push(`{get_field_equals(FocalLengthIn35mmFilm::${len.toString()})}`)
-        }
-
-        iterations++;
-
-        break;
-      }
+    try{
+      await globalThis.db_connection.submitQueryToCenterPanel(query)
 
     }
-    return units.join("+")
+    catch (error){
+      window.alert(error)
+    }
+
   }
 }
