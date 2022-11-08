@@ -19,6 +19,21 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 declare global{
   var db_connection: SagaDBConnectionService;
   var fs_handler: SagaFSHandlerService;
+  var directives: Array<string>;
+  var queries: Array<string>;
 }
 globalThis.db_connection = new SagaDBConnectionService();
 globalThis.fs_handler = new SagaFSHandlerService();
+globalThis.directives = [
+  "collect",
+  "collection-names",
+  "export",
+  "select",
+  "select-unique",
+];
+globalThis.queries = [
+  "equals",
+  "greater_than",
+  "less_than",
+  "range",
+];

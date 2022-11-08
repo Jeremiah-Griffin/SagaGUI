@@ -1,5 +1,92 @@
 <mat-card class="import-export-card">
-  <h3>
-    On import...
-  </h3>
+  <mat-card-header>
+    <mat-card-title>
+      Import
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-actions align="end">
+    <button mat-button class="new-workflow-button">
+      <label>New workflow</label>
+      <mat-icon>Add</mat-icon>
+    </button>
+  </mat-card-actions>
+
+  <table class="workflow-table">
+    <tr>
+      <td>
+       <div>
+          <mat-form-field>
+            <mat-label>Directive</mat-label>
+            <mat-select
+              [(ngModel)]="selectedDirective"
+            >
+
+              <mat-option *ngFor="let directive of directives" [value]="directive">
+                {{directive}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+       <div>
+          <mat-form-field>
+            <mat-label>Noun</mat-label>
+            <input matInput [formControl]="selectedNoun">
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+       <div>
+          <mat-form-field>
+            <mat-label>Statement</mat-label>
+            <mat-select
+              [(ngModel)]="selectedStatement"
+            >
+                <mat-option *ngFor="let query of queries" [value]="query">
+                  {{query}}
+                </mat-option>
+
+
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+        <div>
+          <mat-form-field>
+            <mat-label>Tag</mat-label>
+            <input matInput [formControl]="selectedTag">
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+        <mat-form-field>
+          <input matInput [formControl]="selectedField">
+          <mat-label>Field</mat-label>
+        </mat-form-field>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+
+  <mat-card-footer>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button (click)="saveWorkflow()">
+        <label>Save workflow</label>
+      </button>
+    </mat-card-actions>
+
+  </mat-card-footer>
 </mat-card>
+
+

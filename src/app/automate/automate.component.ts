@@ -1,8 +1,11 @@
-import {Component} from "@angular/core";
+import {Component, Output} from "@angular/core";
 
 @Component({
   selector: "app-automate",
   templateUrl: "automate.component.html",
   styleUrls: ["./automate.component.scss"],
 })
-export class AutomateComponent {}
+export class AutomateComponent {
+
+
+}
