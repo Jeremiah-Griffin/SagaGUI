@@ -25,8 +25,6 @@ import {LighttableLeftPanel} from "./left-panel/left-panel.module";
     LighttableComponent,
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
     MatGridListModule,
     MatFormFieldModule,
     MatInputModule,

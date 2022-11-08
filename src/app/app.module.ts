@@ -9,6 +9,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {LighttableComponent} from "./Lighttable/lighttable.component";
 import {MatTabsModule} from "@angular/material/tabs";
 import {AutomateComponent} from "./automate/automate.component";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AutomateModule} from "./automate/automate.module";
 
 
 const routes: Routes = [
@@ -19,13 +22,18 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent],
-    imports: [LighttableModule,
-        RouterOutlet,
-        MatToolbarModule,
-        MatDividerModule,
-        MatIconModule,
-        MatButtonModule,
-        RouterModule.forRoot(routes), MatTabsModule
+    imports: [
+      AutomateModule,
+      LighttableModule,
+      BrowserModule,
+      BrowserAnimationsModule,
+      RouterOutlet,
+      MatToolbarModule,
+      MatDividerModule,
+      MatIconModule,
+      MatButtonModule,
+      RouterModule.forRoot(routes),
+      MatTabsModule
 
     ],
   bootstrap: [AppComponent],
