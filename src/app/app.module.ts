@@ -8,12 +8,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {LighttableComponent} from "./Lighttable/lighttable.component";
 import {MatTabsModule} from "@angular/material/tabs";
-import {AutomationComponent} from "./automation/automation.component";
+import {AutomateComponent} from "./automate/automate.component";
 
 
 const routes: Routes = [
   { path: "lighttableRoute", component: LighttableComponent},
-  //{ path: "automationRoute", component: AutomationComponent},
+  { path: "automationRoute", component: AutomateComponent},
   { path: "**", redirectTo: "lighttableRoute", pathMatch: 'full' }
 ];
 
