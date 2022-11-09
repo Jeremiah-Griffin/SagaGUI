@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs";
 
-@Injectable()
+@Injectable({providedIn: "root"})
 export class WorkflowService{
   private importWorflowSource = new Subject<string>();
   private exportWorkflowSource = new Subject<string>();
@@ -11,7 +11,9 @@ export class WorkflowService{
   newExportWorkflow$ = this.exportWorkflowSource.asObservable();
 
   emitImportWorkflow(statement: string){
+    window.alert(statement)
     this.importWorflowSource.next(statement);
+
   }
 
   emitExportWorkflow(statement: string){
