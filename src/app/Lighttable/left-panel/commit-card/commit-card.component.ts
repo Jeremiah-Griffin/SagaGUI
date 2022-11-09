@@ -15,7 +15,7 @@ export class CommitCardComponent implements OnInit {
   currentDirectory: string = "";
   childDirectories: Array<string> = [];
   childFiles: Array<string> = [];
-  importWorkflow: Array<string> = [];
+
 
   //These are the truncated variants of the above suitable
   //for display in the application.
@@ -29,11 +29,6 @@ export class CommitCardComponent implements OnInit {
     this.displayDirectories = [];
     this.displayFiles = [];
 
-    workFlowService.newImportWorkflow$.subscribe(
-      workflow =>{
-        this.importWorkflow.push(workflow)
-      }
-    )
   }
 
   async ngOnInit() {
@@ -126,11 +121,13 @@ export class CommitCardComponent implements OnInit {
       full_paths.push(this.buildFullPath(fileName));
     }
 
-    await globalThis.db_connection.commitObjects(full_paths);
+    let hashes = await globalThis.db_connection.commitObjects(full_paths);
 
-    for (let workflow of this.importWorkflow){
-      window.alert(workflow)
-      await globalThis.db_connection.submitQueryToSelf(workflow);
+    let hashes_string = hashes.join(",");
+
+    for (let workflow of this.workFlowService.getImportWorkflows()){
+
+      await globalThis.db_connection.submitQueryToSelf(`${workflow} & echo([${hashes_string}])`);
     }
   }
 

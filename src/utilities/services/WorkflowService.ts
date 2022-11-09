@@ -7,16 +7,54 @@ export class WorkflowService{
   private exportWorkflowSource = new Subject<string>();
 
 
-  newImportWorkflow$ = this.importWorflowSource.asObservable();
-  newExportWorkflow$ = this.exportWorkflowSource.asObservable();
+  importWorkflows: Array<string> = [];
+  exportWorkflows: Array<string> = [];
+
+  constructor() {
+    this.importWorflowSource.subscribe(
+      workflow =>{
+        this.importWorkflows.push(workflow)
+      }
+    )
+
+    this.exportWorkflowSource.subscribe(
+        workflow =>{
+          this.exportWorkflows.push(workflow)
+        }
+    )
+  }
 
   emitImportWorkflow(statement: string){
-    window.alert(statement)
     this.importWorflowSource.next(statement);
-
+    console.log(statement);
+    console.log(this.importWorkflows);
   }
 
   emitExportWorkflow(statement: string){
     this.exportWorkflowSource.next(statement);
+  }
+
+  ///Gets a copy of the import workflows
+  ///within the service: mutating these
+  ///is safe and will never not modify the
+  ///state of the service itself.
+  getImportWorkflows(): Array<string>{
+    let out: Array<string> = [];
+    Object.assign(out, this.importWorkflows);
+    return out
+  }
+
+
+  ///Gets a copy of the export workflows
+  ///within the service: mutating these
+  ///is safe and will never not modify the
+  ///state of the service itself.
+  getExportWorkflows(): Array<string>{
+
+    let out: Array<string> = [];
+
+    Object.assign(out, this.exportWorkflows);
+
+    return out
   }
 }
