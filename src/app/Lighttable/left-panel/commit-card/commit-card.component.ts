@@ -1,6 +1,7 @@
-import {Component,OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {pictureDir} from "@tauri-apps/api/path";
 import {WorkflowService} from "../../../../utilities/services/WorkflowService";
+import {MatSelectionList} from "@angular/material/list";
 
 @Component({
   selector: 'left-panel-commit-card',
@@ -24,16 +25,41 @@ export class CommitCardComponent implements OnInit {
 
   //ngmodel state
   fileNameSelections: Array<string>;
+
+  allSelected: boolean = false;
+
+  @ViewChild("fileSelectionList") private fileSelectionList!: MatSelectionList;
   constructor(private workFlowService: WorkflowService) {
     this.fileNameSelections = [];
     this.displayDirectories = [];
     this.displayFiles = [];
+
 
   }
 
   async ngOnInit() {
     this.currentDirectory = await pictureDir();
     await this.fetchChildren(this.currentDirectory);
+  }
+
+  condUpdateAllSelectedState(){
+    if (this.fileNameSelections.length == this.displayFiles.length){
+      this.allSelected = true;
+    }
+
+    if (this.fileNameSelections.length !== this.displayFiles.length){
+      this.allSelected = false;
+    }
+  }
+
+  selectAllFiles(){
+    this.fileSelectionList.selectAll();
+    this.allSelected = true;
+  }
+
+  deselectAllFiles(){
+    this.fileSelectionList.deselectAll();
+    this.allSelected = false;
   }
 
 
@@ -111,8 +137,6 @@ export class CommitCardComponent implements OnInit {
     return `${this.currentDirectory}\\${path}`
   }
 
-
-
   async submitCommitOp(){
 
     let full_paths = [];
@@ -121,13 +145,12 @@ export class CommitCardComponent implements OnInit {
       full_paths.push(this.buildFullPath(fileName));
     }
 
-    let hashes = await globalThis.db_connection.commitObjects(full_paths);
+    let arr_of_string_hashes: Array<string> = await globalThis.db_connection.commitObjects(full_paths);
 
-    let hashes_string = hashes.join(",");
 
     for (let workflow of this.workFlowService.getImportWorkflows()){
 
-      await globalThis.db_connection.submitQueryToSelf(`${workflow} & echo([${hashes_string}])`);
+      await globalThis.db_connection.submitQueryToSelf(`${workflow} & {echo("[${arr_of_string_hashes}]")}`);
     }
   }
 

@@ -119,21 +119,18 @@ export class SagaDBConnectionService{
   async retrieveThumbnail(hash: BigInt): Promise<[string, Array<string>]>{
     return await invoke('plugin:netcode|retrieve_thumbnail', {hash: hash.toString()})
   }
-  async commitObjects(paths: Array<string>): Promise<Array<BigInt>>{
-    let hashes =  [];
+  async commitObjects(paths: Array<string>): Promise<Array<string>>{
+    let hashes: Array<string> =  [];
     try{
-      let res: string = await invoke('plugin:netcode|commit_objects', {inputDirectories: paths});
+      let res: Array<string> = await invoke('plugin:netcode|commit_objects', {inputDirectories: paths});
 
       //Display these images to the center panel.
       //This must loop through the DB connection to
       //execute any workflows and synchronize state.
       //We can't use JSON stringify because it doesn't support BigInt
-      await this.submitQueryToCenterPanel(`{echo(${res})}`)
+      await this.submitQueryToCenterPanel(`{echo("[${res}]")}`)
 
-      hashes = JSON.parse(res);
-
-
-
+      hashes = res
     }
     catch (error){
       window.alert(error)

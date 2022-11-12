@@ -26,8 +26,6 @@ export class WorkflowService{
 
   emitImportWorkflow(statement: string){
     this.importWorflowSource.next(statement);
-    console.log(statement);
-    console.log(this.importWorkflows);
   }
 
   emitExportWorkflow(statement: string){

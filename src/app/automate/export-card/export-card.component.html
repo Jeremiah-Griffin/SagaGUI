@@ -1,5 +1,86 @@
 <mat-card class="import-export-card">
-  <h3 class="mat-subheading-2">
-    Export
-  </h3>
+  <mat-card-header>
+    <mat-card-title>
+      Import
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-actions align="end">
+    <button mat-button class>
+      <label>New workflow</label>
+    </button>
+  </mat-card-actions>
+
+  <table class="workflow-table">
+    <tr>
+      <td>
+        <div>
+          <mat-form-field>
+            <mat-label>Directive</mat-label>
+            <mat-select>
+
+              <mat-option>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+        <div>
+          <mat-form-field>
+            <mat-label>Noun</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+        <div>
+          <mat-form-field>
+            <mat-label>Statement</mat-label>
+            <mat-select>
+              <mat-option>
+
+              </mat-option>
+
+
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+        <div>
+          <mat-form-field>
+            <mat-label>Tag</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+      </td>
+
+      <td>
+        <mat-form-field>
+          <input matInput >
+          <mat-label>Field</mat-label>
+        </mat-form-field>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+
+  <mat-card-footer>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button>
+        <label>Save workflow</label>
+      </button>
+    </mat-card-actions>
+
+  </mat-card-footer>
 </mat-card>
+
+

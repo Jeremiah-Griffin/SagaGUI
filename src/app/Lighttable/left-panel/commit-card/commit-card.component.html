@@ -25,9 +25,30 @@
 </mat-card>
 
   <mat-selection-list
+    #fileSelectionList
   [(ngModel)]="fileNameSelections"
+    (ngModelChange)="condUpdateAllSelectedState()"
   dense
   >
+    <button mat-button
+    *ngIf="allSelected == false"
+            (click)="selectAllFiles()"
+    >
+      Select all
+    </button>
+
+    <button mat-button
+            *ngIf="allSelected == true"
+            (click)="deselectAllFiles()"
+    >
+      Deselect all
+    </button>
+    <mat-list-option *ngFor="let fileNameIdxPair of this.displayFiles"
+                     [value]="this.childFiles[fileNameIdxPair[1]]"
+    >
+      {{fileNameIdxPair[0]}}
+    </mat-list-option>
+
     <mat-list-item *ngFor="let dirIdxPair of this.displayDirectories">
       <mat-icon matListIcon>folder</mat-icon>
       <button mat-button
@@ -36,11 +57,7 @@
       </button>
     </mat-list-item>
 
-    <mat-list-option *ngFor="let fileNameIdxPair of this.displayFiles"
-    [value]="this.childFiles[fileNameIdxPair[1]]"
-    >
-      {{fileNameIdxPair[0]}}
-    </mat-list-option>
+
 
   </mat-selection-list>
 

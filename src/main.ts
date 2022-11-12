@@ -32,8 +32,9 @@ globalThis.directives = [
   "select-unique",
 ];
 globalThis.queries = [
-  "equals",
-  "greater_than",
-  "less_than",
-  "range",
+  "get_field_contains",
+  "get_field_equals",
+  "get_field_greater_than",
+  "get_field_less_than",
+  "get_field_range",
 ];
